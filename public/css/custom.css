@@ -1,0 +1,41 @@
+/**
+ * Custom styles for the demo page
+ */
+
+.mdb-logo {
+  width: 55px;
+  overflow: hidden;
+  text-indent: -999px;
+  background-image: url("./logo-mdb-small-white.png");
+  background-repeat: no-repeat;
+  background-position: center;
+  background-size: contain;
+}
+
+.intro-section {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  /*min-height: 100vh;*/
+}
+
+.btn-circle {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  padding: 0;
+  overflow: hidden;
+  border-radius: 50%;
+}
+.modal-dialog{
+    margin-top: 100px;
+}
+.card.mb-4{
+    padding: 20px;
+}
+.container-xl.danger-color, .container{
+    margin-top: 50px;
+}
