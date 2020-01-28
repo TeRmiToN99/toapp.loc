@@ -15,7 +15,7 @@ class ArticlesController extends BaseController
     public function index()
     {
         $items = BlogArticle::all();
-        dd($items);
+
 
         return view('blog.articles.index', compact('items'));
 

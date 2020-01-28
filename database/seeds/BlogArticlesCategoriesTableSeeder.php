@@ -13,7 +13,7 @@ class BlogArticlesCategoriesTableSeeder extends Seeder
     {
         $acategories = [];
         $cName = 'Без категории';
-        $categories[] = [
+        $acategories[] = [
             'title'=> $cName,
             'slug' => Str::slug($cName),
             'parent_id' => 0,

@@ -17,7 +17,10 @@ Route::get('/', function () {
 
 Route::group(['namespace' => 'Blog', 'prefix' =>'blog'], function (){
     Route::resource('articles', 'ArticlesController')->names('blog.articles');
+    Route::resource('events', 'EventsController')->names('blog.events');
 });
+
+
 
 
 Route::resource('rest', 'RestTestController')->names('restTest');
@@ -47,3 +50,7 @@ Route::delete('page/delete/{article}', function (\App\Article $article){
 /***************************************Начало товаров*****************************************************/
 /*Route::get('products', 'ProductsController@Index');
 /*****************************************Конец товаров****************************************************/
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
