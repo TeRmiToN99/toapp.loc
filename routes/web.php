@@ -20,10 +20,27 @@ Route::group(['namespace' => 'Blog', 'prefix' =>'blog'], function (){
     Route::resource('events', 'EventsController')->names('blog.events');
 });
 
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
 
 
 
-Route::resource('rest', 'RestTestController')->names('restTest');
+//Route::resource('rest', 'RestTestController')->names('restTest');
+// Админ панель
+$groupData = [
+    'namespace' => 'Blog\Cpanel',
+    'prefix' => 'cpanel/blog',
+];
+Route::group($groupData, function (){
+    // BlogCategory
+    $methods = ['index', 'edit', 'update', 'create', 'store',];
+    Route::resource('categories', 'CategoryController')
+        ->only($methods)
+        ->names('blog.cpanel.categories');
+});
+
+
 /****************************************Начало статей*****************************************************/
 /*Route::get('articles', 'ArticlesController@Index');// Вывод статей
 Route::get('article/{id}', 'ArticlesController@show')->name('articleShow'); //Вывод статьи
@@ -50,6 +67,14 @@ Route::delete('page/delete/{article}', function (\App\Article $article){
 /***************************************Начало товаров*****************************************************/
 /*Route::get('products', 'ProductsController@Index');
 /*****************************************Конец товаров****************************************************/
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
 
 Auth::routes();
 
