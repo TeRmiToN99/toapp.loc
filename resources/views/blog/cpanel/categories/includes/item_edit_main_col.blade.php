@@ -54,6 +54,7 @@
                                       rows="3">
                                 {{ old('description'), $item->description }}
                             </textarea>
+                            <!--возврат набранного текста, вслучае ошибки-->
                         </div>
                     </div>
                 </div>

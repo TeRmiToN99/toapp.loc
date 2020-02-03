@@ -77,7 +77,10 @@ class CategoryController extends BaseController
         }
 
         $data = $request->all();
-        $result = $item->fill($data)->save();
+        //$data = $request->input();
+        $result = $item
+            ->fill($data)
+            ->save();
 
         if ($result) {
             return redirect()
@@ -86,7 +89,8 @@ class CategoryController extends BaseController
         }else{
             return back()
                 ->withErrors(['msg' => 'Ошибка сохранения'])
-                ->withInput();
+                ->withInput()
+                ;
         }
     }
 

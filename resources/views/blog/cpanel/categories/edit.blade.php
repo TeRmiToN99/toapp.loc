@@ -16,7 +16,7 @@
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                                 <span arria-hidden="true">x</span>
                             </button>
-                            {!! dd($errors->all(':message')) !!}
+                            {{($errors->all(':msg')) }}
                         </div>
                     </div>
                 </div>
