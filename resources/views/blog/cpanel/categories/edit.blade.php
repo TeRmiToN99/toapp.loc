@@ -14,9 +14,9 @@
                     <div class="col-md-11">
                         <div class="alert alert-danger" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span arria-hidden="true">x</span>
+                                <span arria-hidden="true">&times;</span>
                             </button>
-                            {{($errors->all(':msg')) }}
+                            {{ $errors->first() }}
                         </div>
                     </div>
                 </div>
@@ -27,8 +27,9 @@
                     <div class="col-md-11">
                         <div class="alert alert-success" role="alert">
                             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                                <span arria-hidden="true">x</span>
+                                <span arria-hidden="true">&times;</span>
                             </button>
+                            {{ session()->get('success') }}
                         </div>
                     </div>
                 </div>

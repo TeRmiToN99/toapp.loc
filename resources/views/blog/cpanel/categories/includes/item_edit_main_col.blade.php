@@ -39,6 +39,7 @@
                                    class="form-control"
                                     placeholder="Выберете категорию"
                                     required>
+
                                 @foreach($categoryList as $categoryOption)
                                     <option value=" {{ $categoryOption->id  }} "
                                         @if($categoryOption->id == $item->parent_id) selected @endif>
@@ -48,11 +49,11 @@
                         </div>
                         <div class="form-group">
                             <label for="title">Описание</label>
-                            <textarea name="description" value=" {{$item->description }} "
+                            <textarea name="description"
                                       id="description"
                                       class="form-control"
                                       rows="3">
-                                {{ old('description'), $item->description }}
+                                {{ old('description', $item->description) }}
                             </textarea>
                             <!--возврат набранного текста, вслучае ошибки-->
                         </div>
