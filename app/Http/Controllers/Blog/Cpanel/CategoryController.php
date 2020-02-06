@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Blog\Cpanel;
 
+use App\Http\Requests\BlogCategoryCreateRequest;
 use App\Http\Requests\BlogCategoryUpdateRequest;
 use App\Models\BlogArticlesCategory;
 use Illuminate\Http\Request;
@@ -30,8 +31,8 @@ class CategoryController extends BaseController
         $item = new BlogArticlesCategory();
         $categoryList = BlogArticlesCategory::all();
 
-        return view('blog.cpanel.categories.edit',
-        compact('item'), 'categoryList');
+        return view('blog.cpanel.categories.create',
+        compact('item', 'categoryList'));
     }
 
     /**
@@ -40,10 +41,27 @@ class CategoryController extends BaseController
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BlogCategoryCreateRequest $request)
     {
-        dd(__METHOD__);
+       $data = $request->input();
+       if (empty($data['slug'])) {
+           $data['slug'] = str_slug($data['title']);
+       }
+
+       //Создаем объект класса BlogArticlesCategory перед добавлением в БД
+        $item = new BlogArticlesCategory($data);
+       dd($item);
+       $item->save();
+
+       if ($item) {
+           return redirect()->route('blog.cpanel.categories.edit', [$item->id])
+               ->with(['success' => 'Успешно сохранено']);
+       } else {
+           return  back()->withErrors(['msg'=> 'Ошибка сохранения'])
+               ->withInput();
+       }
     }
+
 
     /**
      * Show the form for editing the specified resource.
@@ -105,6 +123,9 @@ class CategoryController extends BaseController
         }
 
         $data = $request->all();
+        if (empty($data['slug'])) {
+            $data['slug'] = str_slug($data['title']);
+        }
         //$data = $request->input();
         $result = $item
             ->fill($data)
