@@ -45,13 +45,16 @@ class CategoryController extends BaseController
     {
        $data = $request->input();
        if (empty($data['slug'])) {
-           $data['slug'] = str_slug($data['title']);
+           $data['slug'] = \Str::slug($data['title']);
        }
 
        //Создаем объект класса BlogArticlesCategory перед добавлением в БД
-        $item = new BlogArticlesCategory($data);
-       dd($item);
-       $item->save();
+       // $item = new BlogArticlesCategory($data);
+        // $item->save();
+
+        //Второй способ создания объекта и добавления его в БД
+        $item = (new BlogArticlesCategory())->create($data);
+
 
        if ($item) {
            return redirect()->route('blog.cpanel.categories.edit', [$item->id])
@@ -124,13 +127,16 @@ class CategoryController extends BaseController
 
         $data = $request->all();
         if (empty($data['slug'])) {
-            $data['slug'] = str_slug($data['title']);
+            $data['slug'] = \Str::slug($data['title']);
         }
         //$data = $request->input();
-        $result = $item
+        //Обновление данных первый вариант
+        $result = $item->update($data);
+        //Обновление данных второй вариант более длинный
+        /*$result = $item
             ->fill($data)
             ->save();
-
+        */
         if ($result) {
             return redirect()
                 ->route('blog.cpanel.categories.edit', $item->id)
