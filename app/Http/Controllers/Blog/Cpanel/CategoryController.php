@@ -16,7 +16,7 @@ class CategoryController extends BaseController
      */
     public function index()
     {
-        $paginator = BlogArticlesCategory::paginate(5);
+        $paginator = BlogArticlesCategory::paginate(15);
 
         return view('blog.cpanel.categories.index', compact('paginator'));
     }
@@ -56,12 +56,12 @@ class CategoryController extends BaseController
         $item = (new BlogArticlesCategory())->create($data);
 
 
-       if ($item) {
+       if ($item instanceof BlogArticlesCategory) {
            return redirect()->route('blog.cpanel.categories.edit', [$item->id])
                ->with(['success' => 'Успешно сохранено']);
        } else {
            return  back()->withErrors(['msg'=> 'Ошибка сохранения'])
-               ->withInput();
+               ->withInput();//?
        }
     }
 
