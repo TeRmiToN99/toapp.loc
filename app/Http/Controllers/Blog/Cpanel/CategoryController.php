@@ -5,6 +5,7 @@ namespace App\Http\Controllers\Blog\Cpanel;
 use App\Http\Requests\BlogCategoryCreateRequest;
 use App\Http\Requests\BlogCategoryUpdateRequest;
 use App\Models\BlogArticlesCategory;
+use App\Repositories\BlogCategoryRepository;
 use Illuminate\Http\Request;
 
 class CategoryController extends BaseController
@@ -72,15 +73,15 @@ class CategoryController extends BaseController
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function edit($id)
+    public function edit($id, BlogCategoryRepository $categoryRepository)
     {
-        //dd(__METHOD__);
-        //$item = BlogArticlesCategory::findOrFail($id);
-        $item = BlogArticlesCategory::find($id);
-        //$item = BlogArticlesCategory::where('id', '=',  $id)->first();
-
-        $categoryList = BlogArticlesCategory::all();
+        //$item = BlogArticlesCategory::find($id);
+        //$categoryList = BlogArticlesCategory::all();
         //dd($categoryList);
+
+        $item = $categoryRepository->getEdit($id);
+        $categoryList = $categoryRepository->getForCombobox();
+
         return view('blog.cpanel.categories.edit',
             compact('item', 'categoryList'));
     }
