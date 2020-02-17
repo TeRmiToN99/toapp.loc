@@ -80,6 +80,9 @@ class CategoryController extends BaseController
         //dd($categoryList);
 
         $item = $categoryRepository->getEdit($id);
+        if (empty($item)){
+            abort(404);
+        }
         $categoryList = $categoryRepository->getForCombobox();
 
         return view('blog.cpanel.categories.edit',
