@@ -8,8 +8,25 @@ use App\Models\BlogArticlesCategory;
 use App\Repositories\BlogCategoryRepository;
 use Illuminate\Http\Request;
 
+/**
+ * Управление категориями блога
+ *
+ * @package  App\Http\Controllers\Blog\Cpanel
+*/
 class CategoryController extends BaseController
 {
+    /**
+     * @var BlogCategoryRepository
+     */
+    private $blogCategoryRepository;
+
+    public function __construct()
+    {
+        parent::__construct();
+
+        $this->blogCategoryRepository = app(BlogCategoryRepository::class);
+    }
+
     /**
      * Display a listing of the resource.
      *
@@ -17,7 +34,8 @@ class CategoryController extends BaseController
      */
     public function index()
     {
-        $paginator = BlogArticlesCategory::paginate(15);
+        //$paginator = BlogArticlesCategory::paginate(15);
+        $paginator = $this->blogCategoryRepository->getAllWithPaginate(15);
 
         return view('blog.cpanel.categories.index', compact('paginator'));
     }
@@ -30,7 +48,7 @@ class CategoryController extends BaseController
     public function create()
     {
         $item = new BlogArticlesCategory();
-        $categoryList = BlogArticlesCategory::all();
+        $categoryList = $this->blogCategoryRepository->getForCombobox();
 
         return view('blog.cpanel.categories.create',
         compact('item', 'categoryList'));
@@ -71,19 +89,21 @@ class CategoryController extends BaseController
      * Show the form for editing the specified resource.
      *
      * @param  int  $id
+     * @param BlogCategoryRepository $categoryRepository
+     *
      * @return \Illuminate\Http\Response
      */
-    public function edit($id, BlogCategoryRepository $categoryRepository)
+    public function edit($id)
     {
         //$item = BlogArticlesCategory::find($id);
         //$categoryList = BlogArticlesCategory::all();
         //dd($categoryList);
 
-        $item = $categoryRepository->getEdit($id);
+        $item = $this->blogCategoryRepository->getEdit($id);
         if (empty($item)){
             abort(404);
         }
-        $categoryList = $categoryRepository->getForCombobox();
+        $categoryList = $this->blogCategoryRepository->getForCombobox();
 
         return view('blog.cpanel.categories.edit',
             compact('item', 'categoryList'));
@@ -121,7 +141,9 @@ class CategoryController extends BaseController
         //dd($validatedData);
 
         //dd(__METHOD__, $request->all(), $id);
-        $item = BlogArticlesCategory::find($id);
+        //$item = BlogArticlesCategory::find($id);
+
+        $item = $this->blogCategoryRepository->get($id);
 
         if (empty($item)) {
             return back()
