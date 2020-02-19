@@ -38,6 +38,11 @@ Route::group($groupData, function (){
     Route::resource('categories', 'CategoryController')
         ->only($methods)
         ->names('blog.cpanel.categories');
+
+    //BlogArticle
+    Route::resource('articles', 'ArticleController')
+        ->except(['show'])
+        ->names('blog.cpanel.articles');
 });
 
 
