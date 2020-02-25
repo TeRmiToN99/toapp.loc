@@ -26,8 +26,8 @@
                                 @endphp
                                 <tr @if(!$article->is_published) style="background-color: #ccc;" @endif>
                                     <td>{{ $article->id }}</td>
-                                    <td>{{ $article->user_id }}</td>
-                                    <td>{{ $article->category_id }}</td>
+                                    <td>{{ $article->user->name }}</td>
+                                    <td>{{ $article->category->title }}</td>
                                     <td>
                                         <a href="{{ route('blog.cpanel.articles.edit', $article->id) }}">{{ $article->title }}</a>
                                     </td>

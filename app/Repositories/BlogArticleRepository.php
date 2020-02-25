@@ -8,11 +8,11 @@ use Illuminate\Pagination\LengthAwarePaginator;
 use PhpParser\Node\Expr\AssignOp\Mod;
 
 /**
- * Class BlogCategoriesRepository
+ * Class BlogArticleRepository
  *
  * @package App\Repositories
  */
-class BlogArticlesRepository extends CoreRepository
+class BlogArticleRepository extends CoreRepository
 {
 
     /**
@@ -41,7 +41,17 @@ class BlogArticlesRepository extends CoreRepository
      */
     public function getForCombobox()
     {
+        $columns = implode(', ', [
+            'id',
+            'CONCAT (id, ". ", title) AS id_title',
+        ]);
+        $result = $this
+            ->startConditions()
+            ->selectRaw($columns)
+            ->toBase()
+            ->get();
 
+        return $result;
     }
 
     /**
@@ -64,8 +74,33 @@ class BlogArticlesRepository extends CoreRepository
         $result = $this->startConditions()
                         ->select($columns)
                         ->orderBy('id', 'DESC')
+                        //->with(['category', 'user'])
+                         ->with([
+                         //Можно так
+                         'category' => function ($query) {
+                              $query->select(['id', 'title']);
+                        },
+                          //    или так
+                          'user:id,name',
+                         ])
+                        //->get();
                         ->paginate(25);
+/*
+        $article = $result->first();
 
+        $userId = $article->user->id;
+        $categoryId = $article->category->id;
+        dd($article, $userId, $categoryId);
+        dd($result->first());
+*/
         return $result;
     }
+
+    /**
+     * Получить модель для редактирования в админке.
+     *
+     * @param int $id
+     *
+     * @return Model
+     */
 }

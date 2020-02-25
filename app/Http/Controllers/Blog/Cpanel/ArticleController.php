@@ -2,7 +2,8 @@
 
 namespace App\Http\Controllers\Blog\Cpanel;
 
-use App\Repositories\BlogArticlesRepository;
+use App\Repositories\BlogArticleRepository;
+use App\Repositories\BlogCategoryRepository;
 use Illuminate\Http\Request;
 
 /**
@@ -13,9 +14,14 @@ use Illuminate\Http\Request;
 class ArticleController extends BaseController
 {
     /**
-     * @var BlogArticlesRepository
+     * @var BlogArticleRepository
      */
-    private $blogArticlesRepository;
+    private $blogArticleRepository;
+
+    /**
+     * @var BlogCategoryRepository
+     */
+    private $blogCategoryRepository;
 
     /**
      * ArticleController constructor
@@ -23,8 +29,8 @@ class ArticleController extends BaseController
     public function __construct()
     {
         parent::__construct();
-
-        $this->blogArticlesRepository = app(BlogArticlesRepository::class);
+        $this->blogArticleRepository = app(BlogArticleRepository::class);
+        $this->blogCategoryRepository = app(BlogCategoryRepository::class);
     }
 
     /**
@@ -34,7 +40,7 @@ class ArticleController extends BaseController
      */
     public function index()
     {
-        $paginator = $this->blogArticlesRepository->getAllWithPaginate();
+        $paginator = $this->blogArticleRepository->getAllWithPaginate();
         return view('blog.cpanel.articles.index', compact('paginator'));
     }
 
@@ -78,7 +84,16 @@ class ArticleController extends BaseController
      */
     public function edit($id)
     {
-        dd(__METHOD__, $id);
+        $item = $this->blogArticleRepository->getEdit($id);
+        if (empty($item)){
+            abort(404);
+        }
+
+        $categoryList
+            = $this->blogCategoryRepository->getForCombobox();
+
+        return view('blog.cpanel.articles.edit',
+            compact('item', 'categoryList'));
     }
 
     /**
