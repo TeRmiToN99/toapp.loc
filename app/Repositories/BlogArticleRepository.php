@@ -36,25 +36,6 @@ class BlogArticleRepository extends CoreRepository
     }
 
     /**
-     * Получить список категорний для вывода в выподающем списке
-     * @return Collection
-     */
-    public function getForCombobox()
-    {
-        $columns = implode(', ', [
-            'id',
-            'CONCAT (id, ". ", title) AS id_title',
-        ]);
-        $result = $this
-            ->startConditions()
-            ->selectRaw($columns)
-            ->toBase()
-            ->get();
-
-        return $result;
-    }
-
-    /**
      * Получить список статей для вывода в списке
      * (Админка)
      *
