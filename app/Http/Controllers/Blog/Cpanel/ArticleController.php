@@ -2,8 +2,10 @@
 
 namespace App\Http\Controllers\Blog\Cpanel;
 
+use App\Http\Requests\BlogArticleUpdateRequest;
 use App\Repositories\BlogArticleRepository;
 use App\Repositories\BlogCategoryRepository;
+use Carbon\Carbon;
 use Illuminate\Http\Request;
 
 /**
@@ -99,19 +101,45 @@ class ArticleController extends BaseController
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @param  int  $id
+     * @param  \Illuminate\Http\Request     $request
+     * @param  int                          $id
+     *
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $id)
+    public function update(BlogArticleUpdateRequest $request, $id)
     {
-        dd(__METHOD__, $request->all(), $id);
+        $item = $this->blogArticleRepository->getEdit($id);
+        if (empty($item)) {
+            return back()
+                ->withErrors(['msg' => "Запись id = [{$id}] не найдена"])
+                ->withInput();
+        }
+        $data = $request->all();
+/*
+        if (empty($data['slug'])) {
+            $data['slug'] = \Str::slug($data['title']);
+        }
+        if (empty($item->published_at) && $data['is_published']) {
+            $data['published_at'] = Carbon::now();
+        }*/
+        $result = $item->update($data);
+        if ($result) {
+            return redirect()
+                ->route('blog.cpanel.articles.edit', $item->id)
+                ->with(['success' => 'Успешно сохранено']);
+        }else{
+            return back()
+                ->withErrors(['msg' => 'Ошибка сохранения'])
+                ->withInput()
+                ;
+        }
+        return ;
     }
 
     /**
      * Remove the specified resource from storage.
      *
-     * @param  int  $id
+     * @param  int                      $id
      * @return \Illuminate\Http\Response
      */
     public function destroy($id)
