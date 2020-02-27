@@ -28,7 +28,31 @@ class BlogArticleUpdateRequest extends FormRequest
             'slug'          => 'max:200',
             'excerpt'       => 'max:500',
             'content_raw'   => 'required|string|max:10000|min:5',
-            'category_id'     => 'required|integer|exists:blog_articles,id',
+            'category_id'   => 'required|integer|exists:blog_categories,id',
+        ];
+    }
+    /**
+     *  Get the array messages for the defined validation rules.
+     *
+     * @return array
+     */
+    public function messages()
+    {
+        return [
+            'title.required'    =>  'Введите :title статьи',
+            'content_raw.min'   =>  'Минимальная длина статьи [:min] символов',
+        ];
+    }
+
+    /**
+     *  Get custom attributes for validation errors.
+     *
+     * @return array
+     */
+    public function attributes()
+    {
+        return [
+            'title' => 'Заголовок',
         ];
     }
 }

@@ -3,6 +3,7 @@
 namespace App\Observers;
 
 use App\Models\BlogArticle;
+use Carbon\Carbon;
 
 class BlogArticleObserver
 {
@@ -12,8 +13,15 @@ class BlogArticleObserver
      *
      *  @param BlogArticle  $blogArticle
      */
-    public function creating(BlogArticle $blogArticle){
+    public function creating(BlogArticle $blogArticle)
+    {
+        $this->setPublishedAt($blogArticle);
 
+        $this->setSlug($blogArticle);
+
+        $this->setHtml($blogArticle);
+
+        $this->setUser($blogArticle);
     }
 
     /**
@@ -21,7 +29,16 @@ class BlogArticleObserver
      *
      *  @param BlogArticle  $blogArticle
      */
-    public function updating(BlogArticle $blogArticle){
+    public function updating(BlogArticle $blogArticle)
+    {
+//        $test[] = $blogArticle->isDirty();
+//        $test[] = $blogArticle->isDirty('is_published');
+//        $test[] = $blogArticle->isDirty('user_id');
+//        $test[] = $blogArticle->getAttribute('is_published');
+//        $test[] = $blogArticle->is_published;
+//        $test[] = $blogArticle->getOriginal('is_published');
+//        dd($test);
+
         $this->setPublishedAt($blogArticle);
 
         $this->setSlug($blogArticle);
@@ -33,7 +50,25 @@ class BlogArticleObserver
      *
      *  @param BlogArticle $blogArticle
      */
+    protected function setPublishedAt(BlogArticle $blogArticle)
+    {
+        $needSetPublished = empty($blogArticle->published_at) && $blogArticle->is_published;
+        if ($needSetPublished) {
+            $blogArticle->published_at = Carbon::now();
+        }
+    }
 
+    /**
+     *  Если поле слаг пустое, то заполняем его конвертацией заголовка.
+     *
+     *  @param BlogArticle $blogArticle
+     */
+    protected function setSlug(BlogArticle $blogArticle)
+    {
+        if (empty($blogArticle->slug)){
+            $blogArticle->slug = \Str::slug($blogArticle->title);
+        }
+    }
     /**
      * Handle the blog article "created" event.
      *

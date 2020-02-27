@@ -114,6 +114,7 @@ class CategoryController extends BaseController
      *
      * @param  \Illuminate\Http\Request  $request
      * @param  int  $id
+     *
      * @return \Illuminate\Http\Response
      */
     public function update(BlogCategoryUpdateRequest $request, $id)
@@ -152,9 +153,10 @@ class CategoryController extends BaseController
         }
 
         $data = $request->all();
-        if (empty($data['slug'])) {
+        // перенесено на обсервер
+        /*if (empty($data['slug'])) {
             $data['slug'] = \Str::slug($data['title']);
-        }
+        }*/
         //$data = $request->input();
         //Обновление данных первый вариант
         $result = $item->update($data);

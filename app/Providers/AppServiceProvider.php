@@ -2,6 +2,10 @@
 
 namespace App\Providers;
 
+use App\Models\BlogArticle;
+use App\Models\BlogArticlesCategory;
+use App\Observers\BlogArticleObserver;
+use App\Observers\BlogArticlesCategoryObserver;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -23,6 +27,7 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot()
     {
-        //
+        BlogArticle::observe(BlogArticleObserver::class);
+        BlogArticlesCategory::observe(BlogArticlesCategoryObserver::class);
     }
 }

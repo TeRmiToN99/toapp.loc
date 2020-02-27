@@ -16,6 +16,7 @@ Route::get('/', function () {
 });
 
 Route::group(['namespace' => 'Blog', 'prefix' =>'blog'], function (){
+
     Route::resource('articles', 'ArticlesController')->names('blog.articles');
     Route::resource('events', 'EventsController')->names('blog.events');
 });

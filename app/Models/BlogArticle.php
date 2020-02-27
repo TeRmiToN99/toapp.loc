@@ -25,6 +25,8 @@ class BlogArticle extends Model
 {
     use SoftDeletes;
 
+    const  UNKKNOW_USER = 1;
+
     protected  $fillable
         =[
             'title',
@@ -34,7 +36,6 @@ class BlogArticle extends Model
             'content_raw',
             'is_published',
             'published_at',
-            'user_id',
         ];
 /**
  * Категория статьи.

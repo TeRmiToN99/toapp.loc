@@ -2,7 +2,9 @@
 
 namespace App\Http\Controllers\Blog\Cpanel;
 
+use App\Http\Requests\BlogArticleCreateRequest;
 use App\Http\Requests\BlogArticleUpdateRequest;
+use App\Models\BlogArticle;
 use App\Repositories\BlogArticleRepository;
 use App\Repositories\BlogCategoryRepository;
 use Carbon\Carbon;
@@ -53,18 +55,32 @@ class ArticleController extends BaseController
      */
     public function create()
     {
-        dd(__METHOD__);
+       $item = new BlogArticle();
+       $categoryList = $this->blogCategoryRepository->getForCombobox();
+
+       return view('blog.cpanel.articles.create',
+                    compact('item', 'categoryList'));
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  BlogArticleCreateRequest  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store(BlogArticleCreateRequest $request)
     {
-        dd(__METHOD__);
+        $data = $request->input();
+        $item = (new BlogArticle())->create($data);
+
+
+        if ($item instanceof BlogArticle) {
+            return redirect()->route('blog.cpanel.articles.create', [$item->id])
+                ->with(['success' => 'Успешно сохранено']);
+        } else {
+            return  back()->withErrors(['msg'=> 'Ошибка сохранения'])
+                ->withInput();//?
+        }
     }
 
     /**
@@ -115,7 +131,7 @@ class ArticleController extends BaseController
                 ->withInput();
         }
         $data = $request->all();
-/*
+        /*
         if (empty($data['slug'])) {
             $data['slug'] = \Str::slug($data['title']);
         }
