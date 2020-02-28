@@ -2,6 +2,7 @@
 
 namespace App\Observers;
 
+use App\Models\BlogArticle;
 use App\Models\BlogArticlesCategory;
 
 class BlogArticlesCategoryObserver
@@ -36,6 +37,7 @@ class BlogArticlesCategoryObserver
             $blogArticlesCategory->slug = \Str::slug($blogArticlesCategory->title);
         }
     }
+
     /**
      * Handle the blog article category "updated" event.
      *

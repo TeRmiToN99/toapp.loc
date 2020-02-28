@@ -69,6 +69,30 @@ class BlogArticleObserver
             $blogArticle->slug = \Str::slug($blogArticle->title);
         }
     }
+
+    /**
+     * Установка значения полю content_html оносительно поля content_raw.
+     *
+     * @param BlogArticle $blogArticle
+     */
+    protected function setHtml(BlogArticle $blogArticle)
+    {
+        if ($blogArticle->isDirty('content_raw')) {
+            // TODO: Тут должна быть генерация markdown -> html
+            $blogArticle->content_html = $blogArticle->content_raw;
+        }
+    }
+
+    /**
+     * Если не указан user_id, то устанавливаем пользователя по-умолчанию
+     *
+     * @param BlogArticle $blogArticle
+     */
+    protected function setUser(BlogArticle $blogArticle)
+    {
+        $blogArticle->user_id = auth()->id() ?? BlogArticle::UNKKNOW_USER;
+    }
+
     /**
      * Handle the blog article "created" event.
      *
