@@ -101,7 +101,7 @@ class BlogArticleObserver
      */
     public function created(BlogArticle $blogArticle)
     {
-        //
+        dd(__METHOD__, $blogArticle);
     }
 
     /**
@@ -112,7 +112,18 @@ class BlogArticleObserver
      */
     public function updated(BlogArticle $blogArticle)
     {
-        //
+        dd(__METHOD__, $blogArticle);
+    }
+
+    /**
+     * Handle the blog article "deleting" event.
+     *
+     * @param  \App\Models\BlogArticle  $blogArticle
+     *
+     */
+    public function deleting(BlogArticle $blogArticle)
+    {
+        dd(__METHOD__, $blogArticle);
     }
 
     /**
@@ -123,8 +134,9 @@ class BlogArticleObserver
      */
     public function deleted(BlogArticle $blogArticle)
     {
-        //
+        dd(__METHOD__, $blogArticle);
     }
+
 
     /**
      * Handle the blog article "restored" event.
@@ -134,7 +146,7 @@ class BlogArticleObserver
      */
     public function restored(BlogArticle $blogArticle)
     {
-        //
+        dd(__METHOD__, $blogArticle);
     }
 
     /**
@@ -145,6 +157,6 @@ class BlogArticleObserver
      */
     public function forceDeleted(BlogArticle $blogArticle)
     {
-        //
+        dd(__METHOD__, $blogArticle);
     }
 }

@@ -20,23 +20,23 @@
                         </div>
                     </div>
                 </form>
-                        @if($item->exists)
-                            <div>
-                                <form method="POST" action="{{ route('blog.cpanel.categories.destroy', $item->id) }}">
-                                    @method('DELETE')
-                                    @csrf
-                                    <div class="row justify-content-center">
-                                        <div class="col-md-8">
-                                            <div class="card card-block">
-                                                <div class="card-body ml-auto">
-                                                    <button type="submit" class="btn btn-link">Удалить</button>
-                                                </div>
-                                            </div>
+                {{--@if($item->exists)
+                    <div>
+                        <form method="POST" action="{{ route('blog.cpanel.categories.destroy', $item->id) }}">
+                            @method('DELETE')
+                            @csrf
+                            <div class="row justify-content-center">
+                                <div class="col-md-8">
+                                    <div class="card card-block">
+                                        <div class="card-body ml-auto">
+                                            <button type="submit" class="btn btn-link">Удалить</button>
                                         </div>
-                                        <div class="col-md-3"></div>
                                     </div>
-                                </form>
+                                </div>
+                                <div class="col-md-3"></div>
                             </div>
-                        @endif
+                        </form>
+                    </div>
+                        @endif--}}
         </div>
 @endsection

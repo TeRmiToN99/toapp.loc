@@ -160,6 +160,19 @@ class ArticleController extends BaseController
      */
     public function destroy($id)
     {
-        dd(__METHOD__, $id);
+        //dd(__METHOD__, $id, request()->all());
+        // софт-удаление, в бд остается.
+        $result = BlogArticle::destroy($id);
+        // полное удаление из бд
+        //$result = BlogArticle::find($id)->forceDelete();
+
+        if ($result) {
+            return redirect()
+                ->route('blog.cpanel.articles.index')
+                ->with(['success' => "Запись Id[$id] удалена"]);
+        }else{
+            return back()
+                ->withErrors(['msg' => 'Ошибка удаления']);
+        }
     }
 }
