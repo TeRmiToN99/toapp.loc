@@ -47,7 +47,7 @@ class CategoryController extends BaseController
      */
     public function create()
     {
-        $item = new BlogArticlesCategory();
+        $item = BlogArticlesCategory::make();
         $categoryList = $this->blogCategoryRepository->getForCombobox();
 
         return view('blog.cpanel.categories.create',
@@ -72,7 +72,7 @@ class CategoryController extends BaseController
         // $item->save();
 
         //Второй способ создания объекта и добавления его в БД
-        $item = (new BlogArticlesCategory())->create($data);
+        $item = BlogArticlesCategory::create($data);
 
 
        if ($item instanceof BlogArticlesCategory) {

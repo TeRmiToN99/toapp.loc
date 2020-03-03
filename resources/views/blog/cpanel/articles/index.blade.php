@@ -5,7 +5,7 @@
         <div class="row justify-content-center">
             <div class="col-md-12">
 
-                @include('blog.blog.cpanel.articles.includes.result_messages')
+                @include('blog.cpanel.articles.includes.result_messages')
 
                 <nav class="navbar navbar-toggleable-md navbar-light bg-faded">
                     <a class="btn btn-primary" href="{{ route('blog.cpanel.articles.create') }}">Написать</a>

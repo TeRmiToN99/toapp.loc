@@ -123,7 +123,7 @@ class BlogArticleObserver
      */
     public function deleting(BlogArticle $blogArticle)
     {
-        dd(__METHOD__, $blogArticle);
+        //dd(__METHOD__, $blogArticle);
     }
 
     /**
@@ -134,7 +134,7 @@ class BlogArticleObserver
      */
     public function deleted(BlogArticle $blogArticle)
     {
-        dd(__METHOD__, $blogArticle);
+        //dd(__METHOD__, $blogArticle);
     }
 
 
