@@ -101,7 +101,7 @@ class BlogArticleObserver
      */
     public function created(BlogArticle $blogArticle)
     {
-        dd(__METHOD__, $blogArticle);
+        //dd(__METHOD__, $blogArticle);
     }
 
     /**

@@ -4,6 +4,8 @@ namespace App\Http\Controllers\Blog\Cpanel;
 
 use App\Http\Requests\BlogArticleCreateRequest;
 use App\Http\Requests\BlogArticleUpdateRequest;
+use App\Jobs\BlogArticleAfterCreateJob;
+use App\Jobs\BlogArticleAfterDeleteJob;
 use App\Models\BlogArticle;
 use App\Repositories\BlogArticleRepository;
 use App\Repositories\BlogCategoryRepository;
@@ -75,7 +77,11 @@ class ArticleController extends BaseController
 
 
         if ($item instanceof BlogArticle) {
-            return redirect()->route('blog.cpanel.articles.create', [$item->id])
+            //$this->dispatch(new BlogArticleAfterCreateJob($item));
+            $job = new BlogArticleAfterCreateJob($item);
+            $this->dispatch($job);
+
+            return redirect()->route('blog.cpanel.articles.edit', [$item->id])
                 ->with(['success' => 'Успешно сохранено']);
         } else {
             return  back()->withErrors(['msg'=> 'Ошибка сохранения'])
@@ -167,6 +173,15 @@ class ArticleController extends BaseController
         //$result = BlogArticle::find($id)->forceDelete();
 
         if ($result) {
+            BlogArticleAfterDeleteJob::dispatch($id);
+
+            //> Варианты запуска:
+
+//            BlogArticleAfterDeleteJob::dispatchNow($id);
+//            $this->dispatch(new BlogArticleAfterDeleteJob($id));
+//            $this->dispatchNow(new BlogArticleAfterDeleteJob($id));
+
+
             return redirect()
                 ->route('blog.cpanel.articles.index')
                 ->with(['success' => "Запись Id[$id] удалена"]);
