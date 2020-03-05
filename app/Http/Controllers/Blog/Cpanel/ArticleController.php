@@ -173,11 +173,13 @@ class ArticleController extends BaseController
         //$result = BlogArticle::find($id)->forceDelete();
 
         if ($result) {
-            BlogArticleAfterDeleteJob::dispatch($id);
+            BlogArticleAfterDeleteJob::dispatch($id)->delay(20);
 
             //> Варианты запуска:
 
 //            BlogArticleAfterDeleteJob::dispatchNow($id);
+//            dispatch(new BlogArticleAfterDeleteJob($id));
+//            dispatchNow(new BlogArticleAfterDeleteJob($id));
 //            $this->dispatch(new BlogArticleAfterDeleteJob($id));
 //            $this->dispatchNow(new BlogArticleAfterDeleteJob($id));
 
