@@ -12,7 +12,7 @@
 */
 
 Route::get('/', function () {
-    return view('welcome');
+    return view('template');
 });
 
 Route::group(['namespace' => 'Blog', 'prefix' =>'blog'], function (){
