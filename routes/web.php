@@ -21,6 +21,8 @@ Route::group(['namespace' => 'Blog', 'prefix' =>'blog'], function (){
     Route::resource('events', 'EventsController')->names('blog.events');
 });
 
+Route::resource('products', 'ProductsController@index');
+
 Auth::routes();
 
 Route::get('/home', 'HomeController@index')->name('home');

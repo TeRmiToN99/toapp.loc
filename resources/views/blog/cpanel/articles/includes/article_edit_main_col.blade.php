@@ -2,6 +2,15 @@
     /** @var \App\Models\BlogArticlesCategory */
     /** @var \Illuminate\Support\Collection $categoryList */
 @endphp
+<script>
+    $(document).ready(function() {
+        $('#content_raw').summernote({
+            height:300,
+        });
+    });
+
+</script>
+
 <div class="row justify-content-center">
     <div class="col-md-12">
         <div class="card">
