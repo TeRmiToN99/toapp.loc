@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Models;
-
+use App\Http\Requests\ProductsUpdateRequest;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\SoftDeletes;
 
@@ -10,10 +10,11 @@ use Illuminate\Database\Eloquent\SoftDeletes;
  *
  *  @package App\Models
  *
- *  @property \App\Models\BlogArticlesCategory  $category
+ *  @property \App\Models\ProductsCategory      $category
  *  @property \App\Models\User                  $user
  *  @property string                            $title
  *  @property string                            $slug
+ *  @property string                            $img_url
  *  @property string                            $content_html
  *  @property string                            $content_raw
  *  @property string                            $excerpt

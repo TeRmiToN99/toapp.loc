@@ -13,7 +13,7 @@
     <link href="/public/css/summernote.min.css" rel="stylesheet">
     <script src="/public/js/summernote.min.js"></script>
 </head>
-
+<body>
 
 @extends('layouts.app')
 
@@ -58,3 +58,4 @@
             @endif
     </div>
 @endsection
+</body>>

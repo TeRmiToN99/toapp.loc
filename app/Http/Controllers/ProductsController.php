@@ -6,7 +6,7 @@ use App\Http\Controllers\Blog\BaseController;
 use App\Models\Product;
 use Illuminate\Http\Request;
 
-class ProductsController extends BaseControllerController
+class ProductsController extends BaseController
 {
     /**
      * Display a listing of the resource.
